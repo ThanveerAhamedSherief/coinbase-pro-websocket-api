@@ -1,4 +1,4 @@
-# Coinbase Live Feed
+# Coinbase Pro
 
 ## Overview
 
