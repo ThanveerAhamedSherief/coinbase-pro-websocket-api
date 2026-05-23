@@ -141,3 +141,7 @@ server/
 cd server && npm test       # Jest + coverage
 cd client && npm test       # Vitest
 ```
+
+## Demo
+
+Watch the app in action: [demo_outcome.mov](demo_outcome.mov)
