@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+@theme {
+  --color-base:    #0d1117;
+  --color-surface: #161b22;
+  --color-deep:    #0d1117;
+  --color-border:  #30363d;
+  --color-subtle:  #21262d;
+  --color-text:    #e6edf3;
+  --color-muted:   #8b949e;
+  --color-dim:     #484f58;
+  --color-green:   #3fb950;
+  --color-red:     #f85149;
+  --color-accent:  #79c0ff;
+  --color-amber:   #e3b341;
+
+  --font-family-mono: 'Courier New', Courier, monospace;
+}
+
+/* Light theme overrides — applied via data-theme="light" on <html> */
+[data-theme="light"] {
+  --color-base:    #ffffff;
+  --color-surface: #f6f8fa;
+  --color-deep:    #eef0f3;
+  --color-border:  #d0d7de;
+  --color-subtle:  #e2e5e9;
+  --color-text:    #1f2328;
+  --color-muted:   #57606a;
+  --color-dim:     #8c959f;
+  --color-green:   #1a7f37;
+  --color-red:     #d1242f;
+  --color-accent:  #0969da;
+  --color-amber:   #9a6700;
+}
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-base);
+    color: var(--color-text);
+    font-family: var(--font-family-mono);
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+}
+
+@layer components {
+  .panel {
+    @apply bg-surface border border-border rounded-lg p-5;
+  }
+  .panel-title {
+    @apply text-muted text-[10px] font-bold uppercase tracking-widest mb-3;
+  }
+  .tag {
+    @apply bg-accent/10 text-muted text-[11px] px-2 py-0.5 rounded border border-subtle;
+  }
+}
