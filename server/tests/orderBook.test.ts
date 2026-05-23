@@ -19,10 +19,6 @@ describe('OrderBook', () => {
     book = new OrderBook('BTC-USD');
   });
 
-  // -------------------------------------------------------------------------
-  // Initial state
-  // -------------------------------------------------------------------------
-
   describe('initial state', () => {
     it('should have no bids or asks', () => {
       expect(book.getTopBids()).toHaveLength(0);
@@ -43,10 +39,6 @@ describe('OrderBook', () => {
       expect(book.getBestAsk()).toBeNull();
     });
   });
-
-  // -------------------------------------------------------------------------
-  // applySnapshot
-  // -------------------------------------------------------------------------
 
   describe('applySnapshot', () => {
     const snapshotBids: [string, string][] = [
@@ -117,10 +109,6 @@ describe('OrderBook', () => {
     });
   });
 
-  // -------------------------------------------------------------------------
-  // applyUpdate
-  // -------------------------------------------------------------------------
-
   describe('applyUpdate', () => {
     beforeEach(() => {
       book.applySnapshot(
@@ -180,10 +168,6 @@ describe('OrderBook', () => {
     });
   });
 
-  // -------------------------------------------------------------------------
-  // getTopBids / getTopAsks with depth
-  // -------------------------------------------------------------------------
-
   describe('depth limiting', () => {
     beforeEach(() => {
       book.applySnapshot(
@@ -229,10 +213,6 @@ describe('OrderBook', () => {
     });
   });
 
-  // -------------------------------------------------------------------------
-  // clear()
-  // -------------------------------------------------------------------------
-
   describe('clear', () => {
     it('should reset all state', () => {
       book.applySnapshot(
@@ -256,10 +236,6 @@ describe('OrderBook', () => {
       expect(book.bidLevels).toBe(0);
     });
   });
-
-  // -------------------------------------------------------------------------
-  // product accessor
-  // -------------------------------------------------------------------------
 
   describe('product accessor', () => {
     it('should return the product id', () => {

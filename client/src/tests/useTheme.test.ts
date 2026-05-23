@@ -34,7 +34,6 @@ describe('useTheme', () => {
   });
 
   it('respects OS dark preference when nothing is stored — but hardcoded default wins', () => {
-    // Default is now hardcoded to 'light'; OS preference is ignored when nothing is stored
     Object.defineProperty(window, 'matchMedia', { value: matchMediaMock(false), writable: true });
     const { result } = renderHook(() => useTheme());
     expect(result.current.theme).toBe('light');

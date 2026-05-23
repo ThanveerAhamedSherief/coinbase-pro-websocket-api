@@ -2,7 +2,6 @@ import type { ProductId, ChannelInfo } from '../../shared/types';
 
 export type CoinbaseChannel = 'level2_batch' | 'matches';
 
-// level2_batch is the public name; Coinbase echoes it back as level2_50.
 export const SUBSCRIBE_CHANNELS: readonly CoinbaseChannel[] = ['level2_batch', 'matches'] as const;
 
 export interface CoinbaseSnapshotMessage {

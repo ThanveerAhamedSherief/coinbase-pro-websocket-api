@@ -35,7 +35,6 @@ describe('SubscribePanel', () => {
     );
     const btcBtn = screen.getByRole('button', { name: /BTC-USD/ });
     expect(btcBtn).toHaveAttribute('aria-pressed', 'false');
-    // Badge text lives in a nested span — query within the button
     expect(within(btcBtn).getByText('UNSUBSCRIBED')).toBeInTheDocument();
   });
 

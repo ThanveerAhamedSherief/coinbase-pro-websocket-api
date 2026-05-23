@@ -13,10 +13,6 @@
 import { EventEmitter } from 'events';
 import { CoinbaseClient } from '../src/modules/coinbase/coinbase.client';
 
-// ---------------------------------------------------------------------------
-// Minimal mock WebSocket
-// ---------------------------------------------------------------------------
-
 class MockWebSocket extends EventEmitter {
   static OPEN    = 1;
   static CLOSING = 2;
@@ -49,10 +45,6 @@ class MockWebSocket extends EventEmitter {
   simulateError(err: Error):     void { this.emit('error', err); }
 }
 
-// ---------------------------------------------------------------------------
-// Inject mock WebSocket into CoinbaseClient
-// ---------------------------------------------------------------------------
-
 let mockWs: MockWebSocket;
 
 jest.mock('ws', () => {
@@ -68,10 +60,6 @@ jest.mock('ws', () => {
   return { __esModule: true, default: Ctor };
 });
 
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
-
 const BASE_CONFIG = {
   wsUrl:                'wss://test.example.com',
   reconnectBaseDelayMs: 100,
@@ -82,17 +70,9 @@ function buildClient(overrides = {}): CoinbaseClient {
   return new CoinbaseClient({ ...BASE_CONFIG, ...overrides });
 }
 
-// ---------------------------------------------------------------------------
-// Tests
-// ---------------------------------------------------------------------------
-
 describe('CoinbaseClient', () => {
   beforeEach(() => jest.useFakeTimers());
   afterEach(() => { jest.useRealTimers(); jest.clearAllMocks(); });
-
-  // -------------------------------------------------------------------------
-  // connect / disconnect
-  // -------------------------------------------------------------------------
 
   describe('connect()', () => {
     it('emits "connected" on open', () => {
@@ -144,10 +124,6 @@ describe('CoinbaseClient', () => {
       expect(client.connected).toBe(false);
     });
   });
-
-  // -------------------------------------------------------------------------
-  // subscribeProduct / unsubscribeProduct
-  // -------------------------------------------------------------------------
 
   describe('subscribeProduct()', () => {
     it('sends subscribe frames for each channel', () => {
@@ -211,10 +187,6 @@ describe('CoinbaseClient', () => {
       expect(mockWs.sentFrames).toHaveLength(0);
     });
   });
-
-  // -------------------------------------------------------------------------
-  // Message parsing
-  // -------------------------------------------------------------------------
 
   describe('handleMessage — snapshot', () => {
     it('emits "snapshot" with the parsed message', () => {
@@ -342,10 +314,6 @@ describe('CoinbaseClient', () => {
     });
   });
 
-  // -------------------------------------------------------------------------
-  // Reconnect behaviour
-  // -------------------------------------------------------------------------
-
   describe('reconnect', () => {
     it('schedules reconnect after close', () => {
       const WsMock = jest.requireMock('ws').default as jest.Mock;
@@ -386,10 +354,6 @@ describe('CoinbaseClient', () => {
       expect(WsMock).toHaveBeenCalledTimes(1); // no second connection
     });
   });
-
-  // -------------------------------------------------------------------------
-  // hasCredentials
-  // -------------------------------------------------------------------------
 
   describe('hasCredentials', () => {
     it('returns false when no API credentials are supplied', () => {

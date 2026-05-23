@@ -38,8 +38,6 @@ export const STRINGS = {
     feedRateEmpty: '—',
     noChannels:    'No active subscriptions. Subscribe to a product to begin.',
     noProducts:    'no products',
-    // Coinbase returns their internal names in subscriptions confirmations.
-    // Map them to human-readable labels here.
     channelNames: {
       level2_50:    'Order Book (Level 2)',
       level2_batch: 'Order Book (Level 2)',

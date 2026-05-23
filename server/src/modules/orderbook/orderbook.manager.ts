@@ -6,8 +6,6 @@ export class OrderBook {
   private asks: Map<string, string> = new Map();
   private lastUpdateTime: string | null = null;
   private snapshotReceived = false;
-
-  // Sorted caches — rebuilt only when the underlying data changes.
   private sortedBids: OrderBookEntry[] = [];
   private sortedAsks: OrderBookEntry[] = [];
   private bidsDirty = false;
@@ -32,8 +30,6 @@ export class OrderBook {
     this.asksDirty = true;
   }
 
-  // Discard updates that arrive before the snapshot — level2_batch guarantees
-  // the snapshot comes first, but guard anyway for robustness.
   applyUpdate(changes: [string, string, string][], time?: string): void {
     if (!this.snapshotReceived) return;
     for (const [side, price, size] of changes) {

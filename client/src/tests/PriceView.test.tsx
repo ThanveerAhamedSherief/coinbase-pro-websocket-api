@@ -29,7 +29,7 @@ describe('PriceView', () => {
       />,
     );
     const waiting = screen.getAllByText('Waiting…');
-    expect(waiting).toHaveLength(2); // one for bids, one for asks
+    expect(waiting).toHaveLength(2);
   });
 
   it('renders bid and ask prices from order book data', () => {

@@ -1,23 +1,6 @@
-/**
- * Unit tests for UserManager
- *
- * Covers:
- *  - addUser / removeUser lifecycle
- *  - subscribeUser / unsubscribeUser logic + first/last subscriber detection
- *  - broadcastToProduct — only reaches subscribed users
- *  - sendToUser — targeted delivery
- *  - broadcastToAll — reaches all users
- *  - getSubscribedProducts / getUserSubscriptions
- *  - Edge cases: unknown userId, double subscribe/unsubscribe
- */
-
 import WebSocket from 'ws';
 import { UserManager } from '../src/modules/users/user.manager';
 import { ServerToClientMessage } from '../src/shared/types';
-
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
 
 /** Create a mock WebSocket that records sent messages and has OPEN state. */
 function createMockWs(): WebSocket & { sentMessages: string[] } {
@@ -39,20 +22,12 @@ const MOCK_MSG: ServerToClientMessage = {
   server_time: new Date().toISOString(),
 };
 
-// ---------------------------------------------------------------------------
-// Tests
-// ---------------------------------------------------------------------------
-
 describe('UserManager', () => {
   let manager: UserManager;
 
   beforeEach(() => {
     manager = new UserManager();
   });
-
-  // -------------------------------------------------------------------------
-  // addUser / removeUser
-  // -------------------------------------------------------------------------
 
   describe('addUser', () => {
     it('should increment userCount', () => {
@@ -98,10 +73,6 @@ describe('UserManager', () => {
     });
   });
 
-  // -------------------------------------------------------------------------
-  // subscribeUser
-  // -------------------------------------------------------------------------
-
   describe('subscribeUser', () => {
     beforeEach(() => {
       manager.addUser('user-1', createMockWs());
@@ -135,10 +106,6 @@ describe('UserManager', () => {
       expect(result).toBe(false);
     });
   });
-
-  // -------------------------------------------------------------------------
-  // unsubscribeUser
-  // -------------------------------------------------------------------------
 
   describe('unsubscribeUser', () => {
     beforeEach(() => {
@@ -176,10 +143,6 @@ describe('UserManager', () => {
     });
   });
 
-  // -------------------------------------------------------------------------
-  // getProductSubscriberCount
-  // -------------------------------------------------------------------------
-
   describe('getProductSubscriberCount', () => {
     it('should return 0 for a product with no subscribers', () => {
       expect(manager.getProductSubscriberCount('XRP-USD')).toBe(0);
@@ -193,10 +156,6 @@ describe('UserManager', () => {
       expect(manager.getProductSubscriberCount('LTC-USD')).toBe(2);
     });
   });
-
-  // -------------------------------------------------------------------------
-  // broadcastToProduct
-  // -------------------------------------------------------------------------
 
   describe('broadcastToProduct', () => {
     it('should only send to subscribed users', () => {
@@ -240,10 +199,6 @@ describe('UserManager', () => {
     });
   });
 
-  // -------------------------------------------------------------------------
-  // sendToUser
-  // -------------------------------------------------------------------------
-
   describe('sendToUser', () => {
     it('should send only to the specified user', () => {
       const ws1 = createMockWs();
@@ -261,10 +216,6 @@ describe('UserManager', () => {
       expect(() => manager.sendToUser('ghost', MOCK_MSG)).not.toThrow();
     });
   });
-
-  // -------------------------------------------------------------------------
-  // broadcastToAll
-  // -------------------------------------------------------------------------
 
   describe('broadcastToAll', () => {
     it('should send to every connected user', () => {
@@ -286,10 +237,6 @@ describe('UserManager', () => {
       expect(() => manager.broadcastToAll(MOCK_MSG)).not.toThrow();
     });
   });
-
-  // -------------------------------------------------------------------------
-  // getSubscribedProducts / getUserSubscriptions
-  // -------------------------------------------------------------------------
 
   describe('introspection helpers', () => {
     it('getSubscribedProducts returns unique products with subscribers', () => {
